@@ -42,9 +42,9 @@ app.get("/api/notes/:id", function(req, res) {
 
   console.log(select);
 
-  for (var i = 0; i < notes.length; i++) {
+  for (let i = 0; i < notes.length; i++) {
 
-    if (select === notes[i].title) {
+    if (select === notes[i].route) {
       return res.json(notes[i]);
     };
   };
@@ -62,6 +62,7 @@ app.post("/api/notes", function(req, res) {
 
   notes.push(newNotes);
 
+// Write to db.json file the new posted note data
   fs.writeFileSync(notesArray, JSON.stringify(notes), (err) => {
       if (err) throw err;
       console.log("The note has been saved!")
@@ -70,7 +71,7 @@ app.post("/api/notes", function(req, res) {
   res.json(newNotes);
 });
 
-// Delete Notes{
+// Delete specific note based on id
 app.delete("/api/notes/:id", function(req, res) {
     res.json()
 })
