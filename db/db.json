@@ -1,1 +1,1 @@
-[{"title":"Test Title","text":"Test text"}]
+[{"route":"test","title":"Test Title","text":"Test text"},{"title":"New Note","text":"Some new notes","route":"newnote"}]

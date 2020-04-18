@@ -1,12 +1,17 @@
 // Dependencies
 // =============================================================
-var express = require("express");
-var path = require("path");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const notes = require(path.join(__dirname, "/db/db.json"));
+
+const db_dir = path.resolve(__dirname, "db")
+const notesArray = path.join(db_dir, "db.json");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 8080;
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -18,50 +23,57 @@ app.use(express.json());
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/notes.html"));
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
-// // Displays all characters
-// app.get("/api/characters", function(req, res) {
-//   return res.json(characters);
-// });
+// Displays all notes
+app.get("/api/notes", function(req, res) {
+    return res.json(notes);
+});
 
-// // Displays a single character, or returns false
-// app.get("/api/characters/:character", function(req, res) {
-//   var chosen = req.params.character;
+// Displays a specific note, or returns false
+app.get("/api/notes/:id", function(req, res) {
+  const select = req.params.id;
 
-//   console.log(chosen);
+  console.log(select);
 
-//   for (var i = 0; i < characters.length; i++) {
-//     if (chosen === characters[i].routeName) {
-//       return res.json(characters[i]);
-//     }
-//   }
+  for (var i = 0; i < notes.length; i++) {
 
-//   return res.json(false);
-// });
+    if (select === notes[i].title) {
+      return res.json(notes[i]);
+    };
+  };
 
-// // Create New Characters - takes in JSON input
-// app.post("/api/characters", function(req, res) {
-//   // req.body hosts is equal to the JSON post sent from the user
-//   // This works because of our body parsing middleware
-//   var newCharacter = req.body;
+  return res.json(false);
+});
 
-//   // Using a RegEx Pattern to remove spaces from newCharacter
-//   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-//   newCharacter.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
+// Create New Notes - takes in JSON input
+app.post("/api/notes", function(req, res) {
+  const newNotes = req.body;
 
-//   console.log(newCharacter);
+  newNotes.route = newNotes.title.replace(/\s+/g, "").toLowerCase();
 
-//   characters.push(newCharacter);
+  console.log(newNotes);
 
-//   res.json(newCharacter);
-// });
+  notes.push(newNotes);
+
+  fs.writeFileSync(notesArray, JSON.stringify(notes), (err) => {
+      if (err) throw err;
+      console.log("The note has been saved!")
+  });
+
+  res.json(newNotes);
+});
+
+// Delete Notes{
+app.delete("/api/notes/:id", function(req, res) {
+    res.json()
+})
 
 // Starts the server to begin listening
 // =============================================================
