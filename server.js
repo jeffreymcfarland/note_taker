@@ -1,3 +1,5 @@
+
+
 // Dependencies
 // =============================================================
 const express = require("express");
@@ -20,6 +22,8 @@ app.use(express.json());
 
 // Routes
 // =============================================================
+
+server = () => {
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/notes", function(req, res) {
@@ -83,12 +87,18 @@ app.delete("/api/notes/:id", function(req, res) {
         return res.json(notes);
     };
   };
+});
 
-  
-})
+};
 
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });
+
+
+
+server();
+
+module.exports = server();
