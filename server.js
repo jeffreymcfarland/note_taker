@@ -40,8 +40,6 @@ app.get("/api/notes", function(req, res) {
 app.get("/api/notes/:id", function(req, res) {
   const select = req.params.id;
 
-  console.log(select);
-
   for (let i = 0; i < notes.length; i++) {
 
     if (select === notes[i].route) {
@@ -58,8 +56,6 @@ app.post("/api/notes", function(req, res) {
 
   newNotes.route = newNotes.title.replace(/\s+/g, "").toLowerCase();
 
-  console.log(newNotes);
-
   notes.push(newNotes);
 
 // Write to db.json file the new posted note data
@@ -73,7 +69,22 @@ app.post("/api/notes", function(req, res) {
 
 // Delete specific note based on id
 app.delete("/api/notes/:id", function(req, res) {
-    res.json()
+    const select = req.params.id;
+
+  for (let i = 0; i < notes.length; i++) {
+
+    if (select === notes[i].route) {
+        notes.splice(i, 1);
+        // Write to db.json file the new notes data after note is deleted
+        fs.writeFileSync(notesArray, JSON.stringify(notes), (err) => {
+            if (err) throw err;
+            console.log("The note has been saved!")
+        });
+        return res.json(notes);
+    };
+  };
+
+  
 })
 
 // Starts the server to begin listening
