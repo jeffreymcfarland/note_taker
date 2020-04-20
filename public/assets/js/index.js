@@ -1,6 +1,4 @@
 
-// require("../../../server");
-
 
 var $noteTitle = $(".note-title");
 var $noteText = $(".note-textarea");

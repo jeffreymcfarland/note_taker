@@ -1,5 +1,4 @@
 
-
 // Dependencies
 // =============================================================
 const express = require("express");
@@ -15,6 +14,10 @@ const notesArray = path.join(db_dir, "db.json");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use("/public/assets/css", express.static(path.join(__dirname, './public/assets/css')));
+
+app.use("/public/assets/js", express.static(path.join(__dirname, './public/assets/js')));
+
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -22,8 +25,6 @@ app.use(express.json());
 
 // Routes
 // =============================================================
-
-server = () => {
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/notes", function(req, res) {
@@ -89,16 +90,9 @@ app.delete("/api/notes/:id", function(req, res) {
   };
 });
 
-};
-
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });
 
-
-
-server();
-
-module.exports = server();
