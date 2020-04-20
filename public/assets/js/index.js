@@ -1,5 +1,5 @@
 
-require("../../../server");
+// require("../../../server");
 
 
 var $noteTitle = $(".note-title");
