@@ -1,1 +1,1 @@
-[{"route":"test","title":"Test Title","text":"Test text"},{"title":"New Note","text":"Some new notes","route":"newnote"},{"title":"Another One","text":"More new notes","route":"anotherone"}]
+[{"id":"test","title":"Test Title","text":"Test text"},{"title":"New Note","text":"Some new notes","id":"newnote"},{"title":"Another One","text":"More new notes","id":"anotherone"}]

@@ -47,7 +47,7 @@ app.get("/api/notes/:id", function(req, res) {
 
   for (let i = 0; i < notes.length; i++) {
 
-    if (select === notes[i].route) {
+    if (select === notes[i].id) {
       return res.json(notes[i]);
     };
   };
@@ -59,7 +59,7 @@ app.get("/api/notes/:id", function(req, res) {
 app.post("/api/notes", function(req, res) {
   const newNotes = req.body;
 
-  newNotes.route = newNotes.title.replace(/\s+/g, "").toLowerCase();
+  newNotes.id = newNotes.title.replace(/\s+/g, "").toLowerCase();
 
   notes.push(newNotes);
 
@@ -78,7 +78,7 @@ app.delete("/api/notes/:id", function(req, res) {
 
   for (let i = 0; i < notes.length; i++) {
 
-    if (select === notes[i].route) {
+    if (select === notes[i].id) {
         notes.splice(i, 1);
         // Write to db.json file the new notes data after note is deleted
         fs.writeFileSync(notesArray, JSON.stringify(notes), (err) => {
