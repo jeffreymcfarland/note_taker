@@ -9,10 +9,10 @@ A simple note taking application built with Express and Node. The user can creat
 
 ***
 ## Preview
-![gif](assets/notes.gif)
+![gif](images/notes.gif)
 
 
-![note taker screenshot](assets/notes.png)
+![note taker screenshot](images/notes.png)
 
 ***
 ## Table of Contents
